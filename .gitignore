@@ -1,0 +1,8 @@
+attic
+.*.sw?
+*.pyc
+build
+dist
+*egg*
+src/wub.py
+src/*_wrap*
