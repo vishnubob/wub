@@ -20,6 +20,7 @@ wub_ext = Extension("_wub",
     ],
     swig_opts=["-threads", "-c++", "-Wall"],
     libraries = ["asound", "aubio"],
+    extra_compile_args=['-std=c++11'],
 )
 
 setup_config = {

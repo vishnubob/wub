@@ -1,15 +1,10 @@
 #include "alsa_audio_source.h"
 
-ALSAAudioSource::ALSAAudioSource(uint32_t sample_rate, const string& card, uint32_t channels, uint32_t bufsize) :
-    _card(card), _sample_rate(sample_rate), _channels(channels), _bufsize(bufsize), _source_handle(NULL)
+ALSAAudioSource::ALSAAudioSource(uint32_t sample_rate, const std::string& card, uint32_t channels, uint32_t bufsize) :
+    _card(card), _sample_rate(sample_rate), _channels(channels), _bufsize(bufsize), _source_handle(nullptr), AudioSource()
 {}
 
-ALSAAudioSource::~ALSAAudioSource()
-{
-    close();
-}
-
-bool ALSAAudioSource::open()
+bool ALSAAudioSource::start()
 {
     int err;
     snd_pcm_hw_params_t *hw_params;
@@ -69,7 +64,7 @@ bool ALSAAudioSource::open()
         fprintf(stderr, "cannot prepare audio interface for use (%s)\n", snd_strerror(err));
         return false;
     }
-    return true;
+    return AudioSource::start();
 }
 
 vecf* ALSAAudioSource::capture()
@@ -84,11 +79,12 @@ vecf* ALSAAudioSource::capture()
     return buf;
 }
 
-void ALSAAudioSource::close()
+void ALSAAudioSource::stop()
 {
-    if (_source_handle != NULL)
+    AudioSource::stop();
+    if (_source_handle != nullptr)
     {
         snd_pcm_close(_source_handle);
     }
-    _source_handle = NULL;
+    _source_handle = nullptr;
 }

@@ -6,3 +6,7 @@ dist
 *egg*
 src/wub.py
 src/*_wrap*
+*.o
+*.so
+test.py
+Makefile
