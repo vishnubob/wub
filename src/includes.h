@@ -1,6 +1,8 @@
 #ifndef _INCLUDES_H
 #define _INCLUDES_H
 
+#define AUBIO_UNSTABLE 1
+
 #include <iterator>
 #include <vector>
 #include <string>
