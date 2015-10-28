@@ -16,7 +16,7 @@ class ThreadQueueException: public std::exception
 
 static ThreadQueueException _thread_queue_exception;
 
-template <class T>
+template <typename T>
 class ThreadQueue
 {
 public:

@@ -1,7 +1,7 @@
 #include "alsa_audio_source.h"
 
 ALSAAudioSource::ALSAAudioSource(uint32_t sample_rate, const std::string& card, uint32_t channels, uint32_t bufsize) :
-    _card(card), _sample_rate(sample_rate), _channels(channels), _bufsize(bufsize), _source_handle(nullptr), AudioSource()
+    AudioSource(), _card(card), _sample_rate(sample_rate), _channels(channels), _bufsize(bufsize), _source_handle(nullptr)
 {}
 
 bool ALSAAudioSource::start()
@@ -72,7 +72,7 @@ vecf* ALSAAudioSource::capture()
     int err;
     vecf *buf = new vecf(_channels * _bufsize);
     void *bufptr = (void*) &(buf->front());
-    if ((err = snd_pcm_readi(_source_handle, bufptr, _bufsize)) != _bufsize) 
+    if ((err = snd_pcm_readi(_source_handle, bufptr, _bufsize)) != (int)_bufsize) 
     {
         fprintf(stderr, "read from audio interface failed (%s)\n", snd_strerror(err));
     }

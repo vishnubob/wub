@@ -10,12 +10,13 @@
 class AubioModule
 {
 public:
-    virtual ~AubioModule() = 0;
+    AubioModule();
+    virtual ~AubioModule();
     bool bind(AudioSource &source);
     virtual void thread_loop() = 0;
 
 protected:
-    std::thread *_thread;
+    std::thread _thread;
     _fvec_ptr_que _que;
     std::atomic_bool _running;
 };

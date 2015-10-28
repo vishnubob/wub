@@ -1,7 +1,7 @@
 #include "fft.h"
 
 FFT::FFT(uint32_t win_s) :
-    _win_s(win_s)
+    AubioModule(), _win_s(win_s)
 {}
 
 FFT::~FFT()

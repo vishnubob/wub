@@ -9,10 +9,7 @@
 class AudioSource
 {
 public:
-    AudioSource() :
-        _running(false), _thread(nullptr) 
-        {}
-
+    AudioSource();
     virtual ~AudioSource();
     virtual vecf* capture() = 0;
     virtual bool start();
@@ -23,9 +20,9 @@ protected:
     virtual void thread_loop();
 
 private:
-    std::vector<_fvec_ptr_que*> _queue_list;
-    std::thread *_thread;
     std::atomic_bool _running;
+    std::thread _thread;
+    std::vector<_fvec_ptr_que*> _queue_list;
 };
 
 #endif // _AUDIO_SOURCE_H

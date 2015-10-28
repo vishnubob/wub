@@ -2,6 +2,10 @@
 
 template class ThreadQueue<std::shared_ptr<fvec_t> >;
 
+AudioSource::AudioSource() :
+    _running(false)
+{}
+
 AudioSource::~AudioSource()
 {
     stop();
@@ -12,7 +16,7 @@ bool AudioSource::start()
     if (!_running)
     {
         _running = true;
-        _thread = new std::thread(&AudioSource::thread_loop, this);
+        _thread = std::move(std::thread(&AudioSource::thread_loop, this));
     }
     return _running;
 }
@@ -21,7 +25,7 @@ void AudioSource::stop()
 {
     if (!_running) return;
     _running = false;
-    _thread->join();
+    _thread.join();
 }
 
 void AudioSource::register_queue(_fvec_ptr_que *que)
@@ -40,7 +44,7 @@ void AudioSource::thread_loop()
         vecf::iterator it = std::begin(*raw_frame);
 
         /* copy vector of floats to the aubio frame */
-        for (int idx = 0; idx < raw_frame->size(); ++idx)
+        for (size_t idx = 0; idx < raw_frame->size(); ++idx)
         {
             fvec_set_sample(aubio_frame.get(), it[idx], idx);
         }
