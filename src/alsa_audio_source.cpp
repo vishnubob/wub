@@ -1,9 +1,5 @@
 #include "alsa_audio_source.h"
 
-ALSAAudioSource::ALSAAudioSource(uint32_t sample_rate, const std::string& card, uint32_t channels, uint32_t bufsize) :
-    AudioSource(), _card(card), _sample_rate(sample_rate), _channels(channels), _bufsize(bufsize), _source_handle(nullptr)
-{}
-
 bool ALSAAudioSource::start()
 {
     int err;

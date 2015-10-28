@@ -13,12 +13,17 @@ public:
     AubioModule();
     virtual ~AubioModule();
     bool bind(AudioSource &source);
-    virtual void thread_loop() = 0;
+    void thread_loop();
+    virtual void process_frame(_fvec_ptr frame) = 0;
+
+    size_t get_last_frame() { return _last_frame; }
 
 protected:
     std::thread _thread;
     _fvec_ptr_que _que;
     std::atomic_bool _running;
+    size_t _last_frame;
+    size_t _current_frame;
 };
 
 #endif // _AUBIO_MODULE_H

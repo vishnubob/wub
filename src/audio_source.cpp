@@ -2,15 +2,6 @@
 
 template class ThreadQueue<std::shared_ptr<fvec_t> >;
 
-AudioSource::AudioSource() :
-    _running(false)
-{}
-
-AudioSource::~AudioSource()
-{
-    stop();
-}
-
 bool AudioSource::start()
 {
     if (!_running)
@@ -44,9 +35,15 @@ void AudioSource::thread_loop()
         vecf::iterator it = std::begin(*raw_frame);
 
         /* copy vector of floats to the aubio frame */
-        for (size_t idx = 0; idx < raw_frame->size(); ++idx)
+        for (size_t idx = 0; idx < raw_frame->size(); idx += _channels)
         {
-            fvec_set_sample(aubio_frame.get(), it[idx], idx);
+            smpl_t value = 0;
+            for (size_t ch = 0; ch < _channels; ++ch) 
+            {
+                value += it[idx + ch];
+            }
+            value /= (smpl_t)_channels;
+            fvec_set_sample(aubio_frame.get(), value, idx / _channels);
         }
 
         /* push the new aubio frame into the outgoing queues */

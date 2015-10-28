@@ -7,16 +7,18 @@
 class ALSAAudioSource : public AudioSource
 {
 public:
-    ALSAAudioSource(uint32_t sample_rate, const std::string& card, uint32_t channels=2, uint32_t bufsize = 128);
+    ALSAAudioSource(const std::string& card, uint32_t sample_rate, uint32_t channels=2, uint32_t bufsize = 128) :
+        AudioSource(sample_rate, channels, bufsize), _card(card), _source_handle(nullptr)
+    {}
+
     vecf* capture();
     bool start();
     void stop();
 
+    const std::string& get_card() { return _card; }
+
 private:
     const std::string _card;
-    uint32_t _sample_rate;
-    uint32_t _channels;
-    uint32_t _bufsize;
     snd_pcm_t *_source_handle;
 };
 

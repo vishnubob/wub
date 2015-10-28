@@ -14,7 +14,7 @@
 #include <aubio/aubio.h>
 #include "thread_queue.h"
 
-typedef std::vector<float> vecf;
+typedef std::vector<smpl_t> vecf;
 typedef std::shared_ptr<fvec_t> _fvec_ptr;
 typedef ThreadQueue<_fvec_ptr> _fvec_ptr_que;
 

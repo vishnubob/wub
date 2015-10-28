@@ -27,6 +27,8 @@
     $input = _list;
 }
 
+%include <aubio/types.h>
+
 %include "audio_source.h"
 %include "alsa_audio_source.h"
 %include "alsa_audio_source.h"
@@ -56,3 +58,4 @@
 %feature("nodirector") Pitch::thread_loop;
 %feature("nodirector") Pitch::bind;
 %include "pitch.h"
+
